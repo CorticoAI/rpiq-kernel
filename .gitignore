@@ -2,3 +2,4 @@
 output/
 *-raspbian*.img
 .vagrant/
+custom_config

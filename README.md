@@ -61,6 +61,15 @@ $ qemu-system-arm -M vexpress-a9 -cpu cortex-a9 -dtb output/vexpress-v2p-ca9.dtb
 
 But honestly I don't know why you'd want to do that cause it's slower.
 
+## Customizing
+
+You can add extra kernel configs to a `custom_config` file. For
+example:
+
+```
+$ echo "CONFIG_BTRFS_FS=y" > custom_config
+```
+
 ## Vagrant Build
 
 Just in case you don't have a Linux machine, you can run the build in
