@@ -4,7 +4,7 @@ CUR_DIR=$(pwd)
 TARGET_DIR=${CUR_DIR}/output
 CUSTOM_CONFIG=${CUR_DIR}/custom_config
 TOOLCHAIN=arm-linux-gnueabihf
-REV=r1
+REV=r2
 
 mkdir -p $TARGET_DIR
 cd linux
