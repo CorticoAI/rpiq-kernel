@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Starts up virt emulation with the given kernel and disk image.
+
+if [ "$#" -ne 2 ]; then
+    echo "usage: run-qemu.sh [path to kernel] [path to disk image]"
+    exit 1
+fi
+
+kernel=$1
+image=$2
+
+exec qemu-system-arm \
+       -M virt,highmem=off \
+       -m 1024 \
+       -drive file=$image,if=none,format=raw,id=disk -device virtio-blk-device,drive=disk \
+       -netdev user,id=network,hostfwd=tcp::2222-:22 -device virtio-net-device,netdev=network \
+       -object rng-random,filename=/dev/urandom,id=rng0 -device virtio-rng-pci,rng=rng0 \
+       -kernel $kernel \
+       -append 'console=ttyAMA0,115200 root=/dev/vda2' \
+       -nographic

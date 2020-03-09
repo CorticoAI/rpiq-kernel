@@ -35,7 +35,7 @@ $ ./build-rpiq-kernel
 ... wait for it to compile (~8m on my 2016-ish laptop)
 
 $ ls output/
-rpiq-kernel-4.19.97-r1  vexpress-v2p-ca9.dtb
+rpiq-kernel-4.19.97-r2  vexpress-v2p-ca9.dtb
 ```
 
 The `rpiq-kernel-` file is your kernel. The `.dtb` file is used if
@@ -45,7 +45,13 @@ don't need it.
 If you have a Raspbian image, you can run it like so:
 
 ```
-$ qemu-system-arm -M virt -m 1024 -drive file=2019-09-26-raspbian-buster-lite.img,if=none,format=raw,id=disk -device virtio-blk-device,drive=disk -netdev user,id=network -device virtio-net-device,netdev=network -device virtio-rng-pci -kernel output/rpiq-kernel-4.19.97-r1 -append 'console=ttyAMA0,115200 root=/dev/vda2' -nographic
+$ qemu-system-arm -M virt -m 1024 -drive file=2019-09-26-raspbian-buster-lite.img,if=none,format=raw,id=disk -device virtio-blk-device,drive=disk -netdev user,id=network -device virtio-net-device,netdev=network -device virtio-rng-pci -kernel output/rpiq-kernel-4.19.97-r2 -append 'console=ttyAMA0,115200 root=/dev/vda2' -nographic
+```
+
+Or, using the convenience script:
+
+```
+$ ./run-qemu output/rpiq-kernel-4.19.97-r2 2019-09-26-raspbian-buster-lite.img
 ```
 
 This starts QEMU up and boots via the text-only serial console. It
@@ -56,7 +62,7 @@ If you want to start up QEMU as a VExpress board rather than virt,
 then:
 
 ```
-$ qemu-system-arm -M vexpress-a9 -cpu cortex-a9 -dtb output/vexpress-v2p-ca9.dtb -m 1024 -drive file=2019-09-26-raspbian-buster-lite.img,if=sd,format=raw,id=disk -net user -kernel output/rpiq-kernel-4.19.97-r1 -append 'console=ttyAMA0,115200 root=/dev/mmcblk0p2' -nographic
+$ qemu-system-arm -M vexpress-a9 -cpu cortex-a9 -dtb output/vexpress-v2p-ca9.dtb -m 1024 -drive file=2019-09-26-raspbian-buster-lite.img,if=sd,format=raw,id=disk -net user -kernel output/rpiq-kernel-4.19.97-r2 -append 'console=ttyAMA0,115200 root=/dev/mmcblk0p2' -nographic
 ```
 
 But honestly I don't know why you'd want to do that cause it's slower.
